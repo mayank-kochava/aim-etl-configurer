@@ -16,6 +16,7 @@ import {
   HolderOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+import { useGeoLocations } from "@/hooks/useGeoLocations";
 import {
   DndContext,
   closestCenter,
@@ -206,6 +207,7 @@ function ConsolidationRuleCard({
   onUpdate: (rule: ConsolidationRule) => void;
   onRemove: () => void;
 }) {
+  const { data: geoData, isLoading: geoLoading } = useGeoLocations();
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -356,11 +358,13 @@ function ConsolidationRuleCard({
                   value={rule.region}
                   onChange={(value) => onUpdate({ ...rule, region: value })}
                   style={{ width: "100%" }}
-                >
-                  <Option value="US">US</Option>
-                  <Option value="UK">UK</Option>
-                  <Option value="ALL">ALL</Option>
-                </Select>
+                  loading={geoLoading}
+                  showSearch
+                  options={geoData?.regions.map((region) => ({
+                    label: region.displayName,
+                    value: region.regionId,
+                  }))}
+                />
               </Space>
             </div>
 

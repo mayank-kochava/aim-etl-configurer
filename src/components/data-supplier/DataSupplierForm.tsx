@@ -22,6 +22,7 @@ import {
   useDeleteDataSupplier,
   DataSupplier,
 } from "@/hooks/useDataSupplier";
+import { useGeoLocations } from "@/hooks/useGeoLocations";
 import { message } from "antd";
 import dayjs from "dayjs";
 
@@ -53,6 +54,7 @@ export function DataSupplierForm({
   const createMutation = useCreateDataSupplier();
   const updateMutation = useUpdateDataSupplier(supplierId);
   const deleteMutation = useDeleteDataSupplier(supplierId);
+  const { data: geoData, isLoading: geoLoading } = useGeoLocations();
 
   // Available apps list
   const availableApps = [
@@ -91,6 +93,9 @@ export function DataSupplierForm({
       form.setFieldsValue({
         ...initial,
         ConnectorType: initial.ConnectorType?.toLowerCase(),
+        CurrencyCode: initial.AdvertiserConfig?.CurrencyCode || initial.CurrencyCode,
+        LookbackWeeks: initial.AdvertiserConfig?.LookbackWeeks || initial.LookbackWeeks,
+        WeeklyGrouping: initial.AdvertiserConfig?.WeeklyGrouping || initial.WeeklyGrouping,
         eventMappings: eventMappingsList.length
           ? eventMappingsList
           : [{ standardEvent: "", mappedEvent: "" }],
@@ -239,11 +244,15 @@ export function DataSupplierForm({
 
               <Col span={12}>
                 <Form.Item name="CurrencyCode" label="Currency Code">
-                  <Select placeholder="Select currency">
-                    <Option value="USD">USD</Option>
-                    <Option value="EUR">EUR</Option>
-                    <Option value="GBP">GBP</Option>
-                  </Select>
+                  <Select
+                    placeholder="Select currency"
+                    loading={geoLoading}
+                    showSearch
+                    options={geoData?.currencies.map((currency) => ({
+                      label: `${currency.code} - ${currency.name}`,
+                      value: currency.code,
+                    }))}
+                  />
                 </Form.Item>
               </Col>
 

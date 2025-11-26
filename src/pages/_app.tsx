@@ -8,17 +8,20 @@ import {
 import { useState } from "react";
 import "antd/dist/reset.css";
 import MainLayout from "@/components/layout/MainLayout";
+import { AdvertiserProvider } from "@/contexts/AdvertiserContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={pageProps.dehydratedState}>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </HydrationBoundary>
+      <AdvertiserProvider>
+        <HydrationBoundary state={pageProps.dehydratedState}>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </HydrationBoundary>
+      </AdvertiserProvider>
     </QueryClientProvider>
   );
 }
