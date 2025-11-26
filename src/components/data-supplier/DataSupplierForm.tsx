@@ -16,6 +16,9 @@ import { useEffect, useState, useRef } from "react";
 import { AppsflyerConfig } from "./connector-configs/AppsflyerConfig";
 import { S3Config } from "./connector-configs/S3Config";
 import { SupermetricsConfig } from "./connector-configs/SupermetricsConfig";
+import { SingularConfig } from "./connector-configs/SingularConfig";
+import { BranchConfig } from "./connector-configs/BranchConfig";
+import { GCSConfig } from "./connector-configs/GCSConfig";
 import {
   useCreateDataSupplier,
   useUpdateDataSupplier,
@@ -23,6 +26,7 @@ import {
   DataSupplier,
 } from "@/hooks/useDataSupplier";
 import { useGeoLocations } from "@/hooks/useGeoLocations";
+import { useConnectorConfigs } from "@/hooks/useConnectorConfigs";
 import { message } from "antd";
 import dayjs from "dayjs";
 
@@ -55,6 +59,7 @@ export function DataSupplierForm({
   const updateMutation = useUpdateDataSupplier(supplierId);
   const deleteMutation = useDeleteDataSupplier(supplierId);
   const { data: geoData, isLoading: geoLoading } = useGeoLocations();
+  const { data: connectorConfigs, isLoading: connectorConfigsLoading } = useConnectorConfigs();
 
   // Available apps list
   const availableApps = [
@@ -420,12 +425,14 @@ export function DataSupplierForm({
             >
               <Select
                 placeholder="Select a connector type"
+                loading={connectorConfigsLoading}
+                showSearch
                 onChange={(value) => setConnectorType(value)}
-              >
-                <Option value="appsflyer">Appsflyer</Option>
-                <Option value="supermetrics">Supermetrics</Option>
-                <Option value="s3">S3</Option>
-              </Select>
+                options={connectorConfigs?.map((config) => ({
+                  label: config.ConnectorType,
+                  value: config.ConnectorType.toLowerCase(),
+                }))}
+              />
             </Form.Item>
           </Collapse.Panel>
 
@@ -437,7 +444,15 @@ export function DataSupplierForm({
                   ? "AppsFlyer"
                   : connectorType === "s3"
                   ? "S3"
-                  : "Supermetrics"
+                  : connectorType === "supermetrics"
+                  ? "Supermetrics"
+                  : connectorType === "singular"
+                  ? "Singular"
+                  : connectorType === "branch"
+                  ? "Branch"
+                  : connectorType === "gcs"
+                  ? "GCS"
+                  : connectorType
               })`}
               key="2"
             >
@@ -446,6 +461,9 @@ export function DataSupplierForm({
               {connectorType === "supermetrics" && (
                 <SupermetricsConfig form={form} />
               )}
+              {connectorType === "singular" && <SingularConfig form={form} />}
+              {connectorType === "branch" && <BranchConfig form={form} />}
+              {connectorType === "gcs" && <GCSConfig form={form} />}
             </Collapse.Panel>
           )}
 
