@@ -1,5 +1,9 @@
 import { Layout, Menu, theme, Flex, MenuProps } from "antd";
-import { DatabaseOutlined, RocketOutlined } from "@ant-design/icons";
+import {
+  DatabaseOutlined,
+  RocketOutlined,
+  MergeCellsOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -33,10 +37,11 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }
 
   const items: MenuItem[] = [
+    getItem("Data Supplier Configs", "/", <DatabaseOutlined />),
     getItem(
-      "Data Supplier Configs",
-      "/data-supplier-configs",
-      <DatabaseOutlined />
+      "Data Consolidation",
+      "/data-consolidation-rules",
+      <MergeCellsOutlined />
     ),
   ];
 
@@ -48,8 +53,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
     <Layout style={{ height: "100vh", overflow: "hidden" }}>
       <Sider
         trigger={null}
-        collapsible={true}
-        collapsed={collapsed}
+        collapsible
+        collapsed
+        defaultCollapsed
         width={80}
         collapsedWidth={80}
         theme="light"
@@ -67,7 +73,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <Menu
           theme="light"
           mode="inline"
-          inlineCollapsed={collapsed}
+          inlineCollapsed={true}
           selectedKeys={[router.pathname]}
           items={items}
           onClick={handleMenuClick}
@@ -75,7 +81,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         />
       </Sider>
       <Layout
-        style={{ overflow: "hidden", display: "flex", flexDirection: "column" }}
+        style={{ overflow: "scroll", display: "flex", flexDirection: "column" }}
       >
         <Content
           style={{
@@ -84,7 +90,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
             flex: 1,
-            overflow: "hidden",
+            overflow: "scroll",
             display: "flex",
             flexDirection: "column",
           }}
