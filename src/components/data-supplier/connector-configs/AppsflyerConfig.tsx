@@ -1,5 +1,5 @@
 import { Form, Input, Row, Col, Tag, Button, FormInstance } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 interface AppsflyerConfigProps {
@@ -160,7 +160,9 @@ export function AppsflyerConfig({ form }: AppsflyerConfigProps) {
                   key={kpi.id}
                   closable
                   onClose={() =>
-                    setMasterAggKPIs(masterAggKPIs.filter((k) => k.id !== kpi.id))
+                    setMasterAggKPIs(
+                      masterAggKPIs.filter((k) => k.id !== kpi.id)
+                    )
                   }
                   closeIcon={<CloseOutlined style={{ fontSize: 10 }} />}
                 >
@@ -246,13 +248,12 @@ export function AppsflyerConfig({ form }: AppsflyerConfigProps) {
                   </Col>
                   <Col span={2}>
                     <Button
-                      type="link"
+                      type="default"
+                      shape="circle"
                       danger
                       onClick={() => remove(name)}
-                      style={{ width: "100%" }}
-                    >
-                      Remove
-                    </Button>
+                      icon={<DeleteOutlined />}
+                    />
                   </Col>
                 </Row>
               ))}

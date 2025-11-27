@@ -15,8 +15,15 @@ export default function SupplierPage() {
   // Show loading while router is initializing
   if (!supplierId) {
     return (
-      <div style={{ padding: 24, textAlign: "center" }}>
-        <Spin />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "200px",
+        }}
+      >
+        <Spin size="large" />
       </div>
     );
   }
@@ -24,20 +31,25 @@ export default function SupplierPage() {
   // Show loading while fetching existing data (not for "new")
   if (isLoading && supplierId !== "new") {
     return (
-      <div style={{ padding: 24, textAlign: "center" }}>
-        <Spin />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "200px",
+        }}
+      >
+        <Spin size="large" />
       </div>
     );
   }
 
   return (
-    <div style={{ padding: 24 }}>
-      <DataSupplierForm
-        supplierId={supplierId}
-        initial={data ?? null}
-        onBack={() => router.push("/")}
-        onSaved={() => router.push("/")}
-      />
-    </div>
+    <DataSupplierForm
+      supplierId={supplierId}
+      initial={data ?? null}
+      onBack={() => router.push("/")}
+      onSaved={() => router.push("/")}
+    />
   );
 }

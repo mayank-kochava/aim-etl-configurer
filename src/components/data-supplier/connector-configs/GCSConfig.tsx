@@ -10,7 +10,7 @@ import {
   Typography,
 } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 const { Title } = Typography;
@@ -89,9 +89,9 @@ export function GCSConfig({ form }: GCSConfigProps) {
                     <Input placeholder="folder/path/" style={{ width: 400 }} />
                   </Form.Item>
                   <Button
-                    type="link"
+                    shape="circle"
                     danger
-                    icon={<CloseOutlined />}
+                    icon={<DeleteOutlined />}
                     onClick={() => remove(name)}
                   />
                 </Space>
@@ -134,9 +134,9 @@ export function GCSConfig({ form }: GCSConfigProps) {
                     />
                   </Form.Item>
                   <Button
-                    type="link"
+                    shape="circle"
                     danger
-                    icon={<CloseOutlined />}
+                    icon={<DeleteOutlined />}
                     onClick={() => remove(name)}
                   />
                 </Space>
@@ -175,9 +175,9 @@ export function GCSConfig({ form }: GCSConfigProps) {
                     <Input placeholder="{yyyy-MM-dd}" style={{ width: 400 }} />
                   </Form.Item>
                   <Button
-                    type="link"
+                    shape="circle"
                     danger
-                    icon={<CloseOutlined />}
+                    icon={<DeleteOutlined />}
                     onClick={() => remove(name)}
                   />
                 </Space>
@@ -241,9 +241,9 @@ export function GCSConfig({ form }: GCSConfigProps) {
                     />
                   </Form.Item>
                   <Button
-                    type="link"
+                    shape="circle"
                     danger
-                    icon={<CloseOutlined />}
+                    icon={<DeleteOutlined />}
                     onClick={() => remove(name)}
                   />
                 </Space>

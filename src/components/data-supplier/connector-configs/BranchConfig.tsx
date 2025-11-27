@@ -10,7 +10,7 @@ import {
   Typography,
 } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
 const { Title } = Typography;
@@ -125,9 +125,9 @@ export function BranchConfig({ form }: BranchConfigProps) {
                 </Col>
                 <Col span={2}>
                   <Button
-                    type="link"
+                    shape="circle"
                     danger
-                    icon={<CloseOutlined />}
+                    icon={<DeleteOutlined />}
                     onClick={() => remove(name)}
                     style={{ marginTop: 30 }}
                   />

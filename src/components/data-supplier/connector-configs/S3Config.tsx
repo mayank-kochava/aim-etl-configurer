@@ -8,7 +8,7 @@ import {
   FormInstance,
   Typography,
 } from "antd";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -159,9 +159,9 @@ export function S3Config({ form }: S3ConfigProps) {
                     </Form.Item>
                     {fields.length > 1 && (
                       <Button
-                        type="text"
+                        shape="circle"
                         danger
-                        icon={<CloseOutlined />}
+                        icon={<DeleteOutlined />}
                         onClick={() => remove(field.name)}
                       />
                     )}
@@ -226,9 +226,10 @@ export function S3Config({ form }: S3ConfigProps) {
                     </Form.Item>
                     {fields.length > 1 && (
                       <Button
-                        type="text"
+                        type="default"
+                        shape="circle"
                         danger
-                        icon={<CloseOutlined />}
+                        icon={<DeleteOutlined />}
                         onClick={() => remove(field.name)}
                       />
                     )}
@@ -270,9 +271,10 @@ export function S3Config({ form }: S3ConfigProps) {
                         <Input placeholder="{yyyy-MM-dd} or {yyyyMMdd}" />
                       </Form.Item>
                       <Button
-                        type="text"
+                        type="default"
                         danger
-                        icon={<CloseOutlined />}
+                        shape="circle"
+                        icon={<DeleteOutlined />}
                         onClick={() => remove(field.name)}
                       />
                     </div>

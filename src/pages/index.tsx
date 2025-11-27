@@ -1,5 +1,5 @@
 import { useDataSupplierConfigs } from "@/hooks/useDataSupplierConfigs";
-import { Table, Tag, Typography, Space, Flex, Button } from "antd";
+import { Table, Tag, Typography, Button } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import type { ColumnsType } from "antd/es/table";
@@ -93,13 +93,16 @@ export default function DataSupplierConfigsTable() {
   if (isLoading) return <Pageloader />;
 
   return (
-    <Space
-      direction="vertical"
-      size="large"
-      style={{ display: "flex", height: "100%", overflow: "hidden" }}
-    >
-      <Flex justify="space-between" align="center">
-        <Title level={2} style={{ margin: 0 }}>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 24,
+        }}
+      >
+        <Title level={3} style={{ margin: 0 }}>
           Data Supplier Configurations
         </Title>
         <Button
@@ -107,21 +110,22 @@ export default function DataSupplierConfigsTable() {
           icon={<PlusOutlined />}
           onClick={() => router.push("/data-supplier-config/new")}
         >
-          Add Config
+          Add Configuration
         </Button>
-      </Flex>
+      </div>
       <Table
-        bordered
         columns={columns}
         dataSource={data || []}
         rowKey="IdAsString"
         loading={isLoading}
         pagination={{
-          pageSize: 12,
-          showSizeChanger: false,
+          pageSize: 15,
+          showSizeChanger: true,
           showTotal: (total) => `Total ${total} items`,
+          pageSizeOptions: ["10", "15", "20", "50"],
         }}
+        style={{ flex: 1 }}
       />
-    </Space>
+    </div>
   );
 }

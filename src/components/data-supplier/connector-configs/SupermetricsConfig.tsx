@@ -10,7 +10,7 @@ import {
   FormInstance,
   Typography,
 } from "antd";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 const { Option } = Select;
@@ -242,9 +242,10 @@ export function SupermetricsConfig({ form }: SupermetricsConfigProps) {
               }
               extra={
                 <Button
-                  type="text"
+                  type="default"
+                  shape="circle"
                   danger
-                  icon={<CloseOutlined />}
+                  icon={<DeleteOutlined />}
                   size="small"
                   onClick={(e) => {
                     e.stopPropagation();

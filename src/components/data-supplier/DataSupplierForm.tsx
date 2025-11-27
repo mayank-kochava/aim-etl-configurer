@@ -11,7 +11,7 @@ import {
   Space,
   DatePicker,
 } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
 import { AppsflyerConfig } from "./connector-configs/AppsflyerConfig";
 import { S3Config } from "./connector-configs/S3Config";
@@ -59,7 +59,8 @@ export function DataSupplierForm({
   const updateMutation = useUpdateDataSupplier(supplierId);
   const deleteMutation = useDeleteDataSupplier(supplierId);
   const { data: geoData, isLoading: geoLoading } = useGeoLocations();
-  const { data: connectorConfigs, isLoading: connectorConfigsLoading } = useConnectorConfigs();
+  const { data: connectorConfigs, isLoading: connectorConfigsLoading } =
+    useConnectorConfigs();
 
   // Available apps list
   const availableApps = [
@@ -98,9 +99,12 @@ export function DataSupplierForm({
       form.setFieldsValue({
         ...initial,
         ConnectorType: initial.ConnectorType?.toLowerCase(),
-        CurrencyCode: initial.AdvertiserConfig?.CurrencyCode || initial.CurrencyCode,
-        LookbackWeeks: initial.AdvertiserConfig?.LookbackWeeks || initial.LookbackWeeks,
-        WeeklyGrouping: initial.AdvertiserConfig?.WeeklyGrouping || initial.WeeklyGrouping,
+        CurrencyCode:
+          initial.AdvertiserConfig?.CurrencyCode || initial.CurrencyCode,
+        LookbackWeeks:
+          initial.AdvertiserConfig?.LookbackWeeks || initial.LookbackWeeks,
+        WeeklyGrouping:
+          initial.AdvertiserConfig?.WeeklyGrouping || initial.WeeklyGrouping,
         eventMappings: eventMappingsList.length
           ? eventMappingsList
           : [{ standardEvent: "", mappedEvent: "" }],
@@ -218,7 +222,7 @@ export function DataSupplierForm({
   const activeStatus = Form.useWatch("Active", form);
 
   return (
-    <div style={{ maxWidth: 1200, padding: "0 24px" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Button
         icon={<ArrowLeftOutlined />}
         onClick={onBack}
@@ -516,13 +520,12 @@ export function DataSupplierForm({
                       </Col>
                       <Col span={2}>
                         <Button
-                          type="link"
+                          shape="circle"
+                          icon={<DeleteOutlined />}
+                          type="default"
                           danger
                           onClick={() => remove(name)}
-                          style={{ width: "100%" }}
-                        >
-                          Remove
-                        </Button>
+                        />
                       </Col>
                     </Row>
                   ))}
@@ -543,33 +546,42 @@ export function DataSupplierForm({
         </Collapse>
 
         {/* Action Buttons */}
-        <Space>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={createMutation.isPending || updateMutation.isPending}
-          >
-            {supplierId === "new" ? "CREATE" : "UPDATE"}
-          </Button>
-          <Button onClick={onBack}>CANCEL</Button>
-          <Button
-            type={activeStatus ? "default" : "primary"}
-            danger={activeStatus}
-            onClick={handleActivateDeactivate}
-            style={{ marginLeft: "auto" }}
-          >
-            {activeStatus ? "DEACTIVATE" : "ACTIVATE"}
-          </Button>
-          {supplierId !== "new" && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Space>
             <Button
-              danger
-              onClick={handleDelete}
-              loading={deleteMutation.isPending}
+              type="primary"
+              htmlType="submit"
+              loading={createMutation.isPending || updateMutation.isPending}
             >
-              DELETE
+              {supplierId === "new" ? "Create Configuration" : "Save Changes"}
             </Button>
-          )}
-        </Space>
+            <Button onClick={onBack}>Cancel</Button>
+          </Space>
+          <Space>
+            <Button
+              type={activeStatus ? "default" : "primary"}
+              danger={activeStatus}
+              onClick={handleActivateDeactivate}
+            >
+              {activeStatus ? "Deactivate" : "Activate"}
+            </Button>
+            {supplierId !== "new" && (
+              <Button
+                danger
+                onClick={handleDelete}
+                loading={deleteMutation.isPending}
+              >
+                Delete
+              </Button>
+            )}
+          </Space>
+        </div>
       </Form>
     </div>
   );
