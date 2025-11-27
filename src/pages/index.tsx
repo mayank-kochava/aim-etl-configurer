@@ -111,13 +111,11 @@ export default function DataSupplierConfigsTable() {
         </Button>
       </Flex>
       <Table
-        size="small"
         bordered
         columns={columns}
         dataSource={data || []}
         rowKey="IdAsString"
         loading={isLoading}
-        scroll={{ y: "calc(100vh - 18rem)" }}
         pagination={{
           pageSize: 12,
           showSizeChanger: false,

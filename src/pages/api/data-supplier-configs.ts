@@ -18,16 +18,19 @@ export default async function handler(
     }
 
     const client = await clientPromise;
-    const db = client.db("aim_test");
+    const db = client.db(process.env.DB_NAME as string);
 
     const collection = db.collection("data_supplier_configs");
 
-    console.log("Fetching data supplier configs for advertiserId:", advertiserId);
+    console.log(
+      "Fetching data supplier configs for advertiserId:",
+      advertiserId
+    );
 
     const results = await collection
       .find({
         Deleted: { $ne: true },
-        AdvertiserId: advertiserId
+        AdvertiserId: advertiserId,
       })
       .project({
         ConnectionName: 1,

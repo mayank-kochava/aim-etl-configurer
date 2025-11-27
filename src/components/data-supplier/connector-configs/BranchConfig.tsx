@@ -1,25 +1,39 @@
-import { Form, Input, Row, Col, Switch, DatePicker, Space, Button } from "antd";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Switch,
+  DatePicker,
+  Space,
+  Button,
+  Typography,
+} from "antd";
 import { FormInstance } from "antd/lib/form";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+
+const { Title } = Typography;
 
 interface BranchConfigProps {
   form: FormInstance;
 }
 
 export function BranchConfig({ form }: BranchConfigProps) {
-  const isDateRange = Form.useWatch(["AdvertiserConfig", "DateRangeConfig", "IsDateRange"], form);
+  const isDateRange = Form.useWatch(
+    ["AdvertiserConfig", "DateRangeConfig", "IsDateRange"],
+    form
+  );
 
   return (
     <div>
-      <h4 style={{ marginBottom: 16 }}>Branch Configuration</h4>
+      <Title level={4} style={{ marginBottom: 16 }}>
+        Branch Configuration
+      </Title>
 
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item
-            name={["AdvertiserConfig", "Currency"]}
-            label="Currency"
-          >
+          <Form.Item name={["AdvertiserConfig", "Currency"]} label="Currency">
             <Input placeholder="USD" />
           </Form.Item>
         </Col>
@@ -34,7 +48,9 @@ export function BranchConfig({ form }: BranchConfigProps) {
         </Col>
       </Row>
 
-      <h4 style={{ marginTop: 16, marginBottom: 16 }}>Date Range Configuration</h4>
+      <Title level={4} style={{ marginTop: 16, marginBottom: 16 }}>
+        Date Range Configuration
+      </Title>
       <Row gutter={16}>
         <Col span={8}>
           <Form.Item
@@ -51,8 +67,12 @@ export function BranchConfig({ form }: BranchConfigProps) {
               <Form.Item
                 name={["AdvertiserConfig", "DateRangeConfig", "StartDate"]}
                 label="Start Date"
-                getValueFromEvent={(date) => date ? date.format("YYYY-MM-DD") : null}
-                getValueProps={(value) => ({ value: value ? dayjs(value) : null })}
+                getValueFromEvent={(date) =>
+                  date ? date.format("YYYY-MM-DD") : null
+                }
+                getValueProps={(value) => ({
+                  value: value ? dayjs(value) : null,
+                })}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -61,8 +81,12 @@ export function BranchConfig({ form }: BranchConfigProps) {
               <Form.Item
                 name={["AdvertiserConfig", "DateRangeConfig", "EndDate"]}
                 label="End Date"
-                getValueFromEvent={(date) => date ? date.format("YYYY-MM-DD") : null}
-                getValueProps={(value) => ({ value: value ? dayjs(value) : null })}
+                getValueFromEvent={(date) =>
+                  date ? date.format("YYYY-MM-DD") : null
+                }
+                getValueProps={(value) => ({
+                  value: value ? dayjs(value) : null,
+                })}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -71,7 +95,9 @@ export function BranchConfig({ form }: BranchConfigProps) {
         )}
       </Row>
 
-      <h4 style={{ marginTop: 16, marginBottom: 16 }}>Branch Apps</h4>
+      <Title level={4} style={{ marginTop: 16, marginBottom: 16 }}>
+        Branch Apps
+      </Title>
       <Form.List name={["AdvertiserConfig", "BranchApps"]}>
         {(fields, { add, remove }) => (
           <>
@@ -122,7 +148,9 @@ export function BranchConfig({ form }: BranchConfigProps) {
         )}
       </Form.List>
 
-      <h4 style={{ marginTop: 24, marginBottom: 16 }}>Connector Credential</h4>
+      <Title level={4} style={{ marginTop: 24, marginBottom: 16 }}>
+        Connector Credential
+      </Title>
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
@@ -137,10 +165,7 @@ export function BranchConfig({ form }: BranchConfigProps) {
 
       <Row gutter={16}>
         <Col span={24}>
-          <Form.Item
-            name="DatasetType"
-            label="Dataset Type"
-          >
+          <Form.Item name="DatasetType" label="Dataset Type">
             <Input placeholder="CostAndAttribution" />
           </Form.Item>
         </Col>

@@ -17,7 +17,7 @@ export default async function handler(
     }
 
     const client = await clientPromise;
-    const db = client.db("aim_test");
+    const db = client.db(process.env.DB_NAME as string);
 
     // First, get the advertiser to find their regions
     const advertiserCollection = db.collection("advertisers");
@@ -27,7 +27,9 @@ export default async function handler(
     );
 
     if (!advertiser || !advertiser.Regions || advertiser.Regions.length === 0) {
-      return res.status(200).json({ countries: [], currencies: [], regions: [] });
+      return res
+        .status(200)
+        .json({ countries: [], currencies: [], regions: [] });
     }
 
     // Extract all country codes from advertiser's regions
@@ -39,17 +41,21 @@ export default async function handler(
     });
 
     // Get unique country codes
-    const uniqueCountryCodes = Array.from(new Set(countryCodes.map(code => code.toLowerCase())));
+    const uniqueCountryCodes = Array.from(
+      new Set(countryCodes.map((code) => code.toLowerCase()))
+    );
 
     if (uniqueCountryCodes.length === 0) {
-      return res.status(200).json({ countries: [], currencies: [], regions: [] });
+      return res
+        .status(200)
+        .json({ countries: [], currencies: [], regions: [] });
     }
 
     // Fetch geo locations for these countries
-    const geoCollection = db.collection("geo_locations");
+    const geoCollection = db.collection<any>("geo_locations");
     const geoLocations = await geoCollection
       .find({
-        _id: { $in: uniqueCountryCodes }
+        _id: { $in: uniqueCountryCodes },
       })
       .project({
         _id: 1,
@@ -78,12 +84,14 @@ export default async function handler(
     );
 
     // Format countries data
-    const countries = geoLocations.map((geo) => ({
-      id: geo._id,
-      name: geo.Name,
-      isoCode: geo.IsoCodeTwoLetter,
-      isoCode3: geo.IsoCodeThreeLetter,
-    })).sort((a, b) => a.name.localeCompare(b.name));
+    const countries = geoLocations
+      .map((geo) => ({
+        id: geo._id,
+        name: geo.Name,
+        isoCode: geo.IsoCodeTwoLetter,
+        isoCode3: geo.IsoCodeThreeLetter,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
 
     // Return the advertiser's regions along with filtered geo data
     const regions = advertiser.Regions.map((region: any) => ({

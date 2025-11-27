@@ -1,7 +1,17 @@
-import { Form, Input, Select, Row, Col, Button, FormInstance } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Row,
+  Col,
+  Button,
+  FormInstance,
+  Typography,
+} from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 interface S3ConfigProps {
   form: FormInstance;
@@ -54,7 +64,9 @@ export function S3Config({ form }: S3ConfigProps) {
           marginBottom: 16,
         }}
       >
-        <h4 style={{ marginBottom: 16 }}>AWS Credential</h4>
+        <Title level={4} style={{ marginBottom: 16 }}>
+          AWS Credential
+        </Title>
 
         <Row gutter={16}>
           <Col span={24}>
@@ -98,7 +110,9 @@ export function S3Config({ form }: S3ConfigProps) {
           marginBottom: 16,
         }}
       >
-        <h4 style={{ marginBottom: 16 }}>File Discovery Configuration</h4>
+        <Title level={4} style={{ marginBottom: 16 }}>
+          File Discovery Configuration
+        </Title>
 
         <Form.Item
           label={

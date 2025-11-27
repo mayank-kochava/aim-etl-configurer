@@ -8,11 +8,13 @@ import {
   Checkbox,
   Collapse,
   FormInstance,
+  Typography,
 } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 interface NetworkConfig {
   id: string;
@@ -100,7 +102,9 @@ export function SupermetricsConfig({ form }: SupermetricsConfigProps) {
           marginBottom: 16,
         }}
       >
-        <h4 style={{ marginBottom: 16 }}>AWS Credential</h4>
+        <Title level={4} style={{ marginBottom: 16 }}>
+          AWS Credential
+        </Title>
 
         <Row gutter={16}>
           <Col span={24}>
@@ -186,7 +190,9 @@ export function SupermetricsConfig({ form }: SupermetricsConfigProps) {
             marginBottom: 16,
           }}
         >
-          <h4 style={{ margin: 0 }}>Supermetrics Network Configs</h4>
+          <Title level={4} style={{ margin: 0 }}>
+            Supermetrics Network Configs
+          </Title>
           <Button
             type="dashed"
             icon={<PlusOutlined />}

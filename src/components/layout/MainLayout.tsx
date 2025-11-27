@@ -19,17 +19,33 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const router = useRouter();
   const [collapsed] = useState(true);
   const {
-    token: { colorBgContainer, borderRadiusLG, colorBorder, colorPrimary },
+    token: { colorBgContainer, colorBorder, colorPrimary },
   } = theme.useToken();
 
   const { data: advertisers, isLoading: advertisersLoading } = useAdvertisers();
-  const { selectedAdvertiser, setSelectedAdvertiser, isLoading: contextLoading } = useAdvertiserContext();
+  const {
+    selectedAdvertiser,
+    setSelectedAdvertiser,
+    isLoading: contextLoading,
+  } = useAdvertiserContext();
 
   useEffect(() => {
-    if (!contextLoading && !advertisersLoading && advertisers && advertisers.length > 0 && !selectedAdvertiser) {
+    if (
+      !contextLoading &&
+      !advertisersLoading &&
+      advertisers &&
+      advertisers.length > 0 &&
+      !selectedAdvertiser
+    ) {
       setSelectedAdvertiser(advertisers[0]);
     }
-  }, [advertisers, advertisersLoading, contextLoading, selectedAdvertiser, setSelectedAdvertiser]);
+  }, [
+    advertisers,
+    advertisersLoading,
+    contextLoading,
+    selectedAdvertiser,
+    setSelectedAdvertiser,
+  ]);
 
   type MenuItem = Required<MenuProps>["items"][number];
 
@@ -61,7 +77,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   };
 
   return (
-    <Layout style={{ height: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         trigger={null}
         collapsible
@@ -70,16 +86,19 @@ export default function MainLayout({ children }: MainLayoutProps) {
         width={80}
         collapsedWidth={80}
         theme="light"
+        style={{
+          borderRight: `1px solid ${colorBorder}`,
+        }}
       >
         <Flex
           justify="center"
           align="center"
           style={{
-            height: "4rem",
-            borderBlockEnd: `0.0625rem solid ${colorBorder}`,
+            height: "64px",
+            borderBottom: `1px solid ${colorBorder}`,
           }}
         >
-          <RocketOutlined style={{ fontSize: "1.5rem", color: colorPrimary }} />
+          <RocketOutlined style={{ fontSize: "24px", color: colorPrimary }} />
         </Flex>
         <Menu
           theme="light"
@@ -88,24 +107,27 @@ export default function MainLayout({ children }: MainLayoutProps) {
           selectedKeys={[router.pathname]}
           items={items}
           onClick={handleMenuClick}
-          style={{ marginTop: "1rem" }}
+          style={{
+            borderRight: "none",
+            paddingTop: "8px",
+          }}
         />
       </Sider>
-      <Layout
-        style={{ overflow: "scroll", display: "flex", flexDirection: "column" }}
-      >
+      <Layout>
         <Header
           style={{
             background: colorBgContainer,
-            padding: "0 1.5rem",
-            borderBottom: `0.0625rem solid ${colorBorder}`,
+            padding: "0 24px",
+            borderBottom: `1px solid ${colorBorder}`,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
+            height: "64px",
+            lineHeight: "64px",
           }}
         >
           <Select
-            style={{ minWidth: "15rem" }}
+            style={{ minWidth: "200px" }}
             placeholder="Select Advertiser"
             loading={advertisersLoading}
             value={selectedAdvertiser?.IdAsString}
@@ -115,7 +137,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
               );
               if (advertiser) {
                 setSelectedAdvertiser(advertiser);
-                // Redirect to home page when advertiser changes
                 if (router.pathname !== "/") {
                   router.push("/");
                 }
@@ -129,14 +150,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         </Header>
         <Content
           style={{
-            margin: "1.5rem 1rem",
-            padding: "1.5rem",
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-            flex: 1,
-            overflow: "scroll",
-            display: "flex",
-            flexDirection: "column",
+            padding: "24px",
+            minHeight: "calc(100vh - 64px)",
+            overflow: "auto",
           }}
         >
           {children}

@@ -1,5 +1,7 @@
-import { Form, Input, Row, Col } from "antd";
+import { Form, Input, Row, Col, Typography } from "antd";
 import { FormInstance } from "antd/lib/form";
+
+const { Title } = Typography;
 
 interface SingularConfigProps {
   form: FormInstance;
@@ -8,7 +10,9 @@ interface SingularConfigProps {
 export function SingularConfig({ form }: SingularConfigProps) {
   return (
     <div>
-      <h4 style={{ marginBottom: 16 }}>Singular Configuration</h4>
+      <Title level={4} style={{ marginBottom: 16 }}>
+        Singular Configuration
+      </Title>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
@@ -60,7 +64,9 @@ export function SingularConfig({ form }: SingularConfigProps) {
         </Col>
       </Row>
 
-      <h4 style={{ marginTop: 24, marginBottom: 16 }}>Connector Credential</h4>
+      <Title level={4} style={{ marginTop: 24, marginBottom: 16 }}>
+        Connector Credential
+      </Title>
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item

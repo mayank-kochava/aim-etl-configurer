@@ -11,7 +11,7 @@ export default async function handler(
     }
 
     const client = await clientPromise;
-    const db = client.db("aim_test");
+    const db = client.db(process.env.DB_NAME as string);
 
     const collection = db.collection("connector_configs");
 

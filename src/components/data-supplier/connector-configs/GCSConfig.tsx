@@ -1,39 +1,66 @@
-import { Form, Input, Row, Col, Switch, DatePicker, Button, Space } from "antd";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Switch,
+  DatePicker,
+  Button,
+  Space,
+  Typography,
+} from "antd";
 import { FormInstance } from "antd/lib/form";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+
+const { Title } = Typography;
 
 interface GCSConfigProps {
   form: FormInstance;
 }
 
 export function GCSConfig({ form }: GCSConfigProps) {
-  const isDateRange = Form.useWatch(["AdvertiserConfig", "DateRangeConfig", "IsDateRange"], form);
+  const isDateRange = Form.useWatch(
+    ["AdvertiserConfig", "DateRangeConfig", "IsDateRange"],
+    form
+  );
 
   return (
     <div>
-      <h4 style={{ marginBottom: 16 }}>GCS Configuration</h4>
+      <Title level={4} style={{ marginBottom: 16 }}>
+        GCS Configuration
+      </Title>
 
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
             name={["AdvertiserConfig", "GcsBucketName"]}
             label="GCS Bucket Name"
-            rules={[{ required: true, message: "Please enter GCS bucket name" }]}
+            rules={[
+              { required: true, message: "Please enter GCS bucket name" },
+            ]}
           >
             <Input placeholder="my-gcs-bucket" />
           </Form.Item>
         </Col>
       </Row>
 
-      <h4 style={{ marginTop: 16, marginBottom: 16 }}>File Discovery Configuration</h4>
+      <Title level={4} style={{ marginTop: 16, marginBottom: 16 }}>
+        File Discovery Configuration
+      </Title>
 
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            name={["AdvertiserConfig", "FileDiscoveryConfig", "HistoricalDataStartDate"]}
+            name={[
+              "AdvertiserConfig",
+              "FileDiscoveryConfig",
+              "HistoricalDataStartDate",
+            ]}
             label="Historical Data Start Date"
-            getValueFromEvent={(date) => date ? date.format("YYYY-MM-DD") : null}
+            getValueFromEvent={(date) =>
+              date ? date.format("YYYY-MM-DD") : null
+            }
             getValueProps={(value) => ({ value: value ? dayjs(value) : null })}
           >
             <DatePicker style={{ width: "100%" }} />
@@ -42,11 +69,17 @@ export function GCSConfig({ form }: GCSConfigProps) {
       </Row>
 
       <Form.Item label="Locations">
-        <Form.List name={["AdvertiserConfig", "FileDiscoveryConfig", "Locations"]}>
+        <Form.List
+          name={["AdvertiserConfig", "FileDiscoveryConfig", "Locations"]}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
+                <Space
+                  key={key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
                   <Form.Item
                     {...restField}
                     name={name}
@@ -78,18 +111,27 @@ export function GCSConfig({ form }: GCSConfigProps) {
       </Form.Item>
 
       <Form.Item label="File Patterns">
-        <Form.List name={["AdvertiserConfig", "FileDiscoveryConfig", "FilePatterns"]}>
+        <Form.List
+          name={["AdvertiserConfig", "FileDiscoveryConfig", "FilePatterns"]}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
+                <Space
+                  key={key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
                   <Form.Item
                     {...restField}
                     name={name}
                     rules={[{ required: true, message: "Required" }]}
                     style={{ marginBottom: 0, flex: 1 }}
                   >
-                    <Input placeholder="*.csv or filename.csv" style={{ width: 400 }} />
+                    <Input
+                      placeholder="*.csv or filename.csv"
+                      style={{ width: 400 }}
+                    />
                   </Form.Item>
                   <Button
                     type="link"
@@ -114,11 +156,17 @@ export function GCSConfig({ form }: GCSConfigProps) {
       </Form.Item>
 
       <Form.Item label="Date Patterns">
-        <Form.List name={["AdvertiserConfig", "FileDiscoveryConfig", "DatePatterns"]}>
+        <Form.List
+          name={["AdvertiserConfig", "FileDiscoveryConfig", "DatePatterns"]}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
+                <Space
+                  key={key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
                   <Form.Item
                     {...restField}
                     name={name}
@@ -151,7 +199,12 @@ export function GCSConfig({ form }: GCSConfigProps) {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
-            name={["AdvertiserConfig", "FileDiscoveryConfig", "Options", "SearchSubfolders"]}
+            name={[
+              "AdvertiserConfig",
+              "FileDiscoveryConfig",
+              "Options",
+              "SearchSubfolders",
+            ]}
             label="Search Subfolders"
             valuePropName="checked"
           >
@@ -161,17 +214,31 @@ export function GCSConfig({ form }: GCSConfigProps) {
       </Row>
 
       <Form.Item label="Exclude Patterns">
-        <Form.List name={["AdvertiserConfig", "FileDiscoveryConfig", "Options", "ExcludePatterns"]}>
+        <Form.List
+          name={[
+            "AdvertiserConfig",
+            "FileDiscoveryConfig",
+            "Options",
+            "ExcludePatterns",
+          ]}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Space key={key} style={{ display: "flex", marginBottom: 8 }} align="baseline">
+                <Space
+                  key={key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
                   <Form.Item
                     {...restField}
                     name={name}
                     style={{ marginBottom: 0, flex: 1 }}
                   >
-                    <Input placeholder="pattern_to_exclude" style={{ width: 400 }} />
+                    <Input
+                      placeholder="pattern_to_exclude"
+                      style={{ width: 400 }}
+                    />
                   </Form.Item>
                   <Button
                     type="link"
@@ -195,7 +262,9 @@ export function GCSConfig({ form }: GCSConfigProps) {
         </Form.List>
       </Form.Item>
 
-      <h4 style={{ marginTop: 16, marginBottom: 16 }}>Date Range Configuration</h4>
+      <Title level={4} style={{ marginTop: 16, marginBottom: 16 }}>
+        Date Range Configuration
+      </Title>
       <Row gutter={16}>
         <Col span={8}>
           <Form.Item
@@ -212,8 +281,12 @@ export function GCSConfig({ form }: GCSConfigProps) {
               <Form.Item
                 name={["AdvertiserConfig", "DateRangeConfig", "StartDate"]}
                 label="Start Date"
-                getValueFromEvent={(date) => date ? date.format("YYYY-MM-DD") : null}
-                getValueProps={(value) => ({ value: value ? dayjs(value) : null })}
+                getValueFromEvent={(date) =>
+                  date ? date.format("YYYY-MM-DD") : null
+                }
+                getValueProps={(value) => ({
+                  value: value ? dayjs(value) : null,
+                })}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -222,8 +295,12 @@ export function GCSConfig({ form }: GCSConfigProps) {
               <Form.Item
                 name={["AdvertiserConfig", "DateRangeConfig", "EndDate"]}
                 label="End Date"
-                getValueFromEvent={(date) => date ? date.format("YYYY-MM-DD") : null}
-                getValueProps={(value) => ({ value: value ? dayjs(value) : null })}
+                getValueFromEvent={(date) =>
+                  date ? date.format("YYYY-MM-DD") : null
+                }
+                getValueProps={(value) => ({
+                  value: value ? dayjs(value) : null,
+                })}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -232,11 +309,16 @@ export function GCSConfig({ form }: GCSConfigProps) {
         )}
       </Row>
 
-      <h4 style={{ marginTop: 24, marginBottom: 16 }}>Connector Credential</h4>
+      <Title level={4} style={{ marginTop: 24, marginBottom: 16 }}>
+        Connector Credential
+      </Title>
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            name={["ConnectorCredential", "GcsEncodedCredentialSecretManagerKeyName"]}
+            name={[
+              "ConnectorCredential",
+              "GcsEncodedCredentialSecretManagerKeyName",
+            ]}
             label="GCS Encoded Credential Secret Manager Key Name"
             tooltip="Secret Manager key name for GCS credentials"
           >
@@ -247,10 +329,7 @@ export function GCSConfig({ form }: GCSConfigProps) {
 
       <Row gutter={16}>
         <Col span={24}>
-          <Form.Item
-            name="DatasetType"
-            label="Dataset Type"
-          >
+          <Form.Item name="DatasetType" label="Dataset Type">
             <Input placeholder="CostAndAttribution" />
           </Form.Item>
         </Col>

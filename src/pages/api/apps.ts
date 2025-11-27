@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     const client = await clientPromise;
-    const db = client.db("aim_test");
+    const db = client.db(process.env.DB_NAME as string);
     const collection = db.collection("apps");
 
     if (req.method === "GET") {

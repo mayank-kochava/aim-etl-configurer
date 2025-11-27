@@ -15,7 +15,7 @@ export default async function handler(
 
   try {
     const client = await clientPromise;
-    const db = client.db("aim_test");
+    const db = client.db(process.env.DB_NAME as string);
     const collection = db.collection("data_supplier_configs");
 
     // GET - Fetch single supplier
@@ -46,7 +46,9 @@ export default async function handler(
         return res.status(404).json({ error: "Supplier not found" });
       }
 
-      return res.status(200).json({ success: true, updated: result.modifiedCount });
+      return res
+        .status(200)
+        .json({ success: true, updated: result.modifiedCount });
     }
 
     // DELETE - Soft delete supplier
